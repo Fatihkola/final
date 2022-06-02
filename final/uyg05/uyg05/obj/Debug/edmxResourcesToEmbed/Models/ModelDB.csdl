@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DB03Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ders" EntityType="DB03Model.Ders" />
+    <EntitySet Name="Kayit" EntityType="DB03Model.Kayit" />
+    <EntitySet Name="Odev" EntityType="DB03Model.Odev" />
+    <EntitySet Name="Ogrenci" EntityType="DB03Model.Ogrenci" />
+    <AssociationSet Name="FK_Odev_ToDers" Association="DB03Model.FK_Odev_ToDers">
+      <End Role="Ders" EntitySet="Ders" />
+      <End Role="Odev" EntitySet="Odev" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kayit_ToOdev" Association="DB03Model.FK_Kayit_ToOdev">
+      <End Role="Odev" EntitySet="Odev" />
+      <End Role="Kayit" EntitySet="Kayit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kayit_ToOgrenci" Association="DB03Model.FK_Kayit_ToOgrenci">
+      <End Role="Ogrenci" EntitySet="Ogrenci" />
+      <End Role="Kayit" EntitySet="Kayit" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Ders">
+    <Key>
+      <PropertyRef Name="dersId" />
+    </Key>
+    <Property Name="dersId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dersKodu" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="dersAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dersKredi" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Odev" Relationship="DB03Model.FK_Odev_ToDers" FromRole="Ders" ToRole="Odev" />
+  </EntityType>
+  <EntityType Name="Kayit">
+    <Key>
+      <PropertyRef Name="kayitId" />
+    </Key>
+    <Property Name="kayitId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="kayitOdevId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="kayitOgrId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Odev" Relationship="DB03Model.FK_Kayit_ToOdev" FromRole="Kayit" ToRole="Odev" />
+    <NavigationProperty Name="Ogrenci" Relationship="DB03Model.FK_Kayit_ToOgrenci" FromRole="Kayit" ToRole="Ogrenci" />
+  </EntityType>
+  <EntityType Name="Odev">
+    <Key>
+      <PropertyRef Name="odevId" />
+    </Key>
+    <Property Name="odevId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="odevDersId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="odevKonu" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Ders" Relationship="DB03Model.FK_Odev_ToDers" FromRole="Odev" ToRole="Ders" />
+    <NavigationProperty Name="Kayit" Relationship="DB03Model.FK_Kayit_ToOdev" FromRole="Odev" ToRole="Kayit" />
+  </EntityType>
+  <EntityType Name="Ogrenci">
+    <Key>
+      <PropertyRef Name="ogrId" />
+    </Key>
+    <Property Name="ogrId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ogrNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ogrAdsoyad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ogrDogTarih" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kayit" Relationship="DB03Model.FK_Kayit_ToOgrenci" FromRole="Ogrenci" ToRole="Kayit" />
+  </EntityType>
+  <Association Name="FK_Odev_ToDers">
+    <End Type="DB03Model.Ders" Role="Ders" Multiplicity="1" />
+    <End Type="DB03Model.Odev" Role="Odev" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ders">
+        <PropertyRef Name="dersId" />
+      </Principal>
+      <Dependent Role="Odev">
+        <PropertyRef Name="odevDersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kayit_ToOdev">
+    <End Type="DB03Model.Odev" Role="Odev" Multiplicity="1" />
+    <End Type="DB03Model.Kayit" Role="Kayit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Odev">
+        <PropertyRef Name="odevId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitOdevId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kayit_ToOgrenci">
+    <End Type="DB03Model.Ogrenci" Role="Ogrenci" Multiplicity="1" />
+    <End Type="DB03Model.Kayit" Role="Kayit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ogrenci">
+        <PropertyRef Name="ogrId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitOgrId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
