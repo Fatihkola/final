@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>ÖDEVLER</h1>
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Aranacak Bir Değer Giriniz" (keyup)="Filtrele($event)">
+    </mat-form-field>
+
+    <button mat-fab matTooltip="Ödev Ekle" color="primary" (click)="Ekle()">
+    <mat-icon aria-label="label">add</mat-icon>
+  </button>
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="odevDersAdi">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ödev Alınan Ders
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit"> {{kayit.odevDersAdi}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="odevKonu">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ödevin Konusu
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit"> {{kayit.odevKonu}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="odevOgrSayisi">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Öğrenci Sayısı
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit"> {{kayit.odevOgrSayisi}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="islemler">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> İşlemler
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit">
+                <button mat-icon-button>
+            <mat-icon aria-label="label" color="primary" matTooltip="Öğrenci Listele" [routerLink]="['/derslistele',kayit.ogrId]" >article</mat-icon>
+          </button>
+                <button mat-icon-button>
+            <mat-icon aria-label="label" color="primary" matTooltip="Ödev Düzenle" (click)="Duzenle(kayit)">edit</mat-icon>
+          </button>
+                <button mat-icon-button>
+            <mat-icon aria-label="label" color="warn" matTooltip="Ödev Sil" (click)="Sil(kayit)">delete</mat-icon>
+          </button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[ 2, 5, 10, 25, 100]" showFirstLastButtons>
+    </mat-paginator>
+</div>

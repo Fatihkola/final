@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>Odev Listesi</h1>
+    <h3><b>Ders :</b>{{secOdev?.odevDersAdi}}</h3>
+    <h3><b>Adı Soyadı :</b>{{secOdev?.odevKonu}}</h3>
+    <button mat-fab color="primary" matTooltip="Ödev Listesi" [routerLink]="['/odev']">
+<mat-icon aria-label="label">arrow_back</mat-icon>
+</button>
+
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="dersKodu">
+            <mat-header-cell *matHeaderCellDef>Ders Kodu
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit"> {{kayit.dersKodu}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dersAdi">
+            <mat-header-cell *matHeaderCellDef>Ders Adı
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit"> {{kayit.dersAdi}} </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="dersKredi">
+            <mat-header-cell *matHeaderCellDef>Ders Kredi
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit"> {{kayit.dersKredi}} </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="islemler">
+            <mat-header-cell *matHeaderCellDef>İşlemler
+            </mat-header-cell>
+            <mat-cell *matCellDef="let kayit">
+
+                <button mat-icon-button color="warn" matTooltip="Odev Kaydını Sil">
+          <mat-icon aria-label="label">delete</mat-icon>
+        </button>
+
+            </mat-cell>
+        </ng-container>
+
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
